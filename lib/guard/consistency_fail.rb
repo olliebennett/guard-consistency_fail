@@ -7,13 +7,15 @@ module Guard
     # :environment        defaults to 'development'
 
     def initialize(options = {})
-      @options = options
+      @options = {
+        run_on_start: true
+      }.merge(options)
       @watchers = options[:watchers]
       super
     end
 
     def start
-      run_all
+      run_all if @options[:run_on_start]
     end
 
     # Called on Ctrl-C signal (when Guard quits)
