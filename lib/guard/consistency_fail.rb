@@ -13,7 +13,7 @@ module Guard
     end
 
     def start
-      system(cmd)
+      run_all
     end
 
     # Called on Ctrl-C signal (when Guard quits)
@@ -23,18 +23,18 @@ module Guard
     # Called on Ctrl-Z signal
     # This method should be mainly used for "reload" (really!) actions like reloading passenger/spork/bundler/...
     def reload
-      start
+      run_all
     end
 
     # Called on Ctrl-/ signal
     # This method should be principally used for long action like running all specs/tests/...
     def run_all
-      start
+      system(cmd)
     end
 
     # Called on file(s) modifications
     def run_on_change(paths)
-      start
+      run_all
     end
 
     private
