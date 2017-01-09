@@ -4,18 +4,27 @@ module Guard
   class ConsistencyFail < Plugin
 
     # Allowable options are:
-    # :environment        defaults to 'development'
+    # :environment - defaults to 'development'
+    # :run_on_start - whether to run when Guard starts up
 
     def initialize(options = {})
+      puts "initialize..."
+      puts options
       @options = {
         run_on_start: true
       }.merge(options)
+      puts "merged:"
+      puts @options
       @watchers = options[:watchers]
+      puts 'calling super...'
       super
     end
 
     def start
-      run_all if @options[:run_on_start]
+      puts "start..."
+      puts @options
+
+      run_all unless @options[:run_on_start] == false
     end
 
     # Called on Ctrl-C signal (when Guard quits)
@@ -36,6 +45,8 @@ module Guard
 
     # Called on file(s) modifications
     def run_on_change(paths)
+      puts "#" * 99
+      puts "files changes: #{paths}"
       run_all
     end
 
